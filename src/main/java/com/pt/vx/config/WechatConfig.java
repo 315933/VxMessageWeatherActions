@@ -46,7 +46,7 @@ public class WechatConfig {
                 new BirthDay(2006,9,26,true,false,"pt生日快乐！！"),
                 new BirthDay(2003,11,2,false,false,"生日快乐哦~~"),
                 new BirthDay(2022,12,5,true,true),
-                new BirthDay(2020,7,8,true,false,"周年快乐！！！")
+                new BirthDay(2022,12,5,true,false,"周年快乐！！！")
         ));
 
         userList.add(getUser(
