@@ -37,44 +37,36 @@ public class ApiMessageService {
         keyDTOS.add(KeyConfig.KEY_HISTORY_TODAY);
         keyDTOS.add(KeyConfig.KEY_XIN_GUAN);
     }
-
-    /**
-     * 获取API消息，新增一个参数 alwaysQinghua 控制是否总是获取情话。
-     */
-    public String getApiMessage(KeyDTO keyDTO, User user, boolean alwaysQinghua){
+    public String getApiMessage(KeyDTO keyDTO, User user){
         String result = null;
-        // 如果设置了 alwaysQinghua 为 true，则总是返回情话
-        if (alwaysQinghua) {
-            result = getQinghua();
-        } else {
-            if (KeyConfig.KEY_QING_HUA.equalsKey(keyDTO)){
-                result = getQinghua();
-            } else if (KeyConfig.KEY_DUAN_ZI.equalsKey(keyDTO)){
-                result = getDuanZi();
-            } else if (KeyConfig.KEY_DU_JI_TANG.equalsKey(keyDTO)){
-                result = getDuJiTang();
-            } else if (KeyConfig.KEY_SENTENCE.equalsKey(keyDTO)){
-                result = getRandomSentence();
-            } else if (KeyConfig.KEY_MI_YU.equalsKey(keyDTO)){
-                result = getRiddle();
-            } else if (KeyConfig.KEY_HOROSCOPE.equalsKey(keyDTO)){
-                BirthDay[] birthDays = user.getBirthDays();
-                if( Objects.nonNull(birthDays)){
-                    result = getHoroscope(birthDays[0]);
-                }
-            } else if (KeyConfig.KEY_HISTORY_TODAY.equalsKey(keyDTO)){
-                result = getHistoryToday();
-            } else if (KeyConfig.KEY_XIN_GUAN.equalsKey(keyDTO)){
-                String address = user.getAddress().split("省",2)[0];
-                result = getXinGuan(address);
+        if (KeyConfig.KEY_QING_HUA.equalsKey(keyDTO)){
+            result =  getQinghua();
+        }else if (KeyConfig.KEY_DUAN_ZI.equalsKey(keyDTO)){
+            result = getDuanZi();
+        }else if (KeyConfig.KEY_DU_JI_TANG.equalsKey(keyDTO)){
+            result = getDuJiTang();
+        }else if (KeyConfig.KEY_SENTENCE.equalsKey(keyDTO)){
+            result = getRandomSentence();
+        }else if (KeyConfig.KEY_MI_YU.equalsKey(keyDTO)){
+            result = getRiddle();
+        }else if (KeyConfig.KEY_HOROSCOPE.equalsKey(keyDTO)){
+            BirthDay[] birthDays = user.getBirthDays();
+            if( Objects.nonNull(birthDays)){
+                result = getHoroscope(birthDays[0]);
             }
+        }else if (KeyConfig.KEY_HISTORY_TODAY.equalsKey(keyDTO)){
+            result = getHistoryToday();
+        }else if (KeyConfig.KEY_XIN_GUAN.equalsKey(keyDTO)){
+            String address = user.getAddress().split("省",2)[0];
+            result = getXinGuan(address);
         }
-        log.info("API接口为：{},获取的结果为：{}",keyDTO.getKey(),result);
+        log.info("随机API接口为：{},获取的结果为：{}",keyDTO.getKey(),result);
         return result;
     }
 
     /**
-     * 随机一个API访问
+     *
+     * @return 随机一个API访问
      */
     public KeyDTO getRandomKey(){
         List<KeyDTO> collect = keyDTOS.stream().filter(KeyDTO::isOpen).collect(Collectors.toList());
@@ -85,16 +77,18 @@ public class ApiMessageService {
         return collect.get(i);
     }
 
- /**
+    /**
      * 随机情话
      *
      * @return
      */
     private String getQinghua() {
-    String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
-    return HttpUtil.get(url);
+        String url = "https://api.uomg.com/api/rand.qinghua?format=json";
+        String s = HttpUtil.get(url);
+        JSONObject jsonObject = JSONUtil.parseObj(s);
+        return jsonObject.getStr("content");
     }
-    
+
     /**
      * @return 获取段子
      */
