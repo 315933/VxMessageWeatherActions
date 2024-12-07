@@ -83,122 +83,56 @@ public class ApiMessageService {
      * @return
      */
     private String getQinghua() {
-        String url = "https://api.uomg.com/api/rand.qinghua?format=json";
-        String s = HttpUtil.get(url);
-        JSONObject jsonObject = JSONUtil.parseObj(s);
-        return jsonObject.getStr("content");
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
      * @return 获取段子
      */
     private String getDuanZi() {
-        String url = "https://api.linhun.vip/api/duanzi?apiKey=c15d45f2e9d44858a7d95f421d0e7df1";
-        String result = HttpUtil.get(url);
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        return jsonObject.getStr("mum");
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
      * @return 获取毒鸡汤
      */
     private String getDuJiTang() {
-        String url = "https://api.linhun.vip/api/dujitang?apiKey=067e54eb3b4128ed513f3bbad1a2f394";
-        String result = HttpUtil.get(url);
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        return jsonObject.getStr("msg");
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
      * @return 随机一句
      */
     private String getRandomSentence() {
-        String url = "https://api.linhun.vip/api/Aword?apiKey=3df6350da79fc77334102f876f72dad1";
-        String result = HttpUtil.get(url);
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        return jsonObject.getStr("duanju");
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
      * @return 谜语
      */
     private String getRiddle() {
-        String url = "https://api.linhun.vip/api/miyu?apiKey=ef06f5c549a2051286bb1a5d530c2bae";
-        String result = HttpUtil.get(url);
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        String name = jsonObject.getStr("name");
-        String tips = jsonObject.getStr("Tips");
-        String answer = jsonObject.getStr("Answer");
-        log.info("---获取谜语--- 谜题：{}，提示：{}，谜底：{}", name, tips, answer);
-        return name + "(提示：" + tips + ")";
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
      * @return 获取星座分析
      */
     private String getHoroscope(BirthDay birthDay) {
-        String url = "https://api.linhun.vip/api/xzys?apiKey=1ceee3e6244c63171e9f2228b5eac1a4&name=%s";
-        int month = birthDay.getMonth();
-        int day = birthDay.getDay();
-        boolean chinese = birthDay.isChineseFlag();
-        if (chinese) {
-            int year = birthDay.getYear();
-            ChineseDate chineseDate = new ChineseDate(year, month, day);
-            month = chineseDate.getGregorianMonthBase1();
-            day = chineseDate.getGregorianDay();
-        }
-        String horoscope = "";
-        if (month == 3 && day >= 21 || month == 4 && day <= 20) {
-            horoscope =  "白羊";
-        } else if (month == 4 || month == 5 && day <= 20) {
-            horoscope = "金牛";
-        } else if (month == 5 || month == 6 && day <= 20) {
-            horoscope = "双子";
-        } else if (month == 6 || month == 7 && day <= 22) {
-            horoscope = "巨蟹";
-        } else if (month == 7 || month == 8 && day <= 22) {
-            horoscope = "狮子";
-        } else if (month == 8 || month == 9 && day <= 22) {
-            horoscope = "处女";
-        } else if (month == 9 || month == 10 && day <= 22) {
-            horoscope = "天秤";
-        } else if (month == 10 || month == 11 && day <= 22) {
-            horoscope = "天蝎";
-        } else if (month == 11 || month == 12 && day <= 22) {
-            horoscope = "射手";
-        } else if (month == 12 || month == 1 && day <= 21) {
-            horoscope = "摩羯";
-        } else if (month == 1 || month == 2 && day <= 19) {
-            horoscope = "水瓶";
-        } else if (month == 2 || month == 3) {
-            horoscope = "双鱼";
-        }else {
-            horoscope = "不知道";
-        }
-        return HttpUtil.get(String.format(url, horoscope));
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
      * @return 获取历史上今天
      */
     private String getHistoryToday() {
-        String url = "https://api.linhun.vip/api/history?format=json&apiKey=099a422902a55e6020abf0f5f97031e9";
-        String result = HttpUtil.get(url);
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        JSONArray content = jsonObject.getJSONArray("content");
-        StringBuilder history = new StringBuilder();
-        int historyTodayCount = content.size();
-        if(MainConfig.historyTodayCount < 1 ){
-            historyTodayCount = 1;
-        }else if(MainConfig.historyTodayCount < historyTodayCount){
-            historyTodayCount = MainConfig.historyTodayCount;
-        }
-
-        for (int i = 0; i < historyTodayCount; i++) {
-            String str = content.getStr(i);
-            history.append(str).append("\n");
-        }
-        return history.toString();
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
     /**
@@ -207,14 +141,8 @@ public class ApiMessageService {
      * @return 新冠信息
      */
     private  String getXinGuan(String province){
-        String url = "https://api.linhun.vip/api/yiqing?apiKey=c2278bb8c0aa62d017e0c17b9561537c&keyword=%s";
-        String result = HttpUtil.get(String.format(url, province));
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        JSONObject data = jsonObject.getJSONObject("data");
-        String time = jsonObject.getStr("UpTime");
-        String now = data.getStr("现存确诊");
-        String nowNo = data.getStr("现存无症状");
-        return time + "现存确诊:" + now + ",现存无症状:"+nowNo;
+        String url = "https://api.oick.cn/dutang/api.php"; // 确保URL返回纯文本
+        return HttpUtil.get(url);
     }
 
 
